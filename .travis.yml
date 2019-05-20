@@ -1,0 +1,20 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t asaldivar/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run asaldivar/react-test npm run test
+
+after_success:
+  - docker build -t asaldivar/multi-client ./client
+  - docker build -t asaldivar/multi-nginx ./nginx
+  - docker build -t asaldivar/multi-server ./server
+  - docker build -t asaldivar/multi-worker ./worker
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push asaldivar/multi-client
+  - docker push asaldivar/multi-nginx
+  - docker push asaldivar/multi-server
+  - docker push asaldivar/multi-worker
