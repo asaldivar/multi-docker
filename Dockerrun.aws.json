@@ -11,13 +11,14 @@
     {
       "name": "server",
       "image": "asaldivar/multi-server",
-      "hostname": "client",
+      "hostname": "api",
       "essential": false,
       "memory": 128
     },
     {
       "name": "worker",
       "image": "asaldivar/multi-worker",
+      "hostname": "worker",
       "essential": false,
       "memory": 128
     },
